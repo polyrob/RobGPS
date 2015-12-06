@@ -20,8 +20,8 @@ def getCoords():
     rowarray_list = []
 
     db = MySQLdb.connect(host="robbiescheidt.mysql.pythonanywhere-services.com",    # your host, usually localhost
-                     user="robbiescheidt",         # your username
-                     passwd="Qt3rytmysql",  # your password
+                     user="##########",         # your username
+                     passwd="##########",  # your password
                      db="robbiescheidt$robgps")        # name of the data base
     cur = db.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("""SELECT * FROM records ORDER BY time DESC LIMIT 10;""")
@@ -52,8 +52,8 @@ def call_rest():
     lng = request.values.get("lng")
 
     db = MySQLdb.connect(host="robbiescheidt.mysql.pythonanywhere-services.com",    # your host, usually localhost
-                     user="robbiescheidt",         # your username
-                     passwd="Qt3rytmysql",  # your password
+                     user="##############",         # your username
+                     passwd="############",  # your password
                      db="robbiescheidt$robgps")        # name of the data base
     x = db.cursor()
     try:
