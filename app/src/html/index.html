@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>RobGPS Map</title>
     <style>
-        html, body {
+        html,
+        body {
         height: 100%;
         margin: 0;
         padding: 0;
@@ -17,69 +19,80 @@
     </style>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
+
 <body>
-<div id="map"></div>
+<div id="map">loading...</div>
 <script>
-
-  function initMap() {
-    var myLatLng = {lat: -25.363, lng: 131.044};
-    
-
-
-
-    /* a path */
-//    var coords = [
-//      {lat: 37.772, lng: -122.214},
-//      {lat: 21.291, lng: -157.821},
-//      {lat: -18.142, lng: 178.431},
-//      {lat: -27.467, lng: 153.027}
-//    ];
-    $.getJSON( "http://robbiescheidt.pythonanywhere.com/robgps", function( data ) {
-      var items = [];
-      $.each( data, function( key, val ) {
-        val.lat = parseFloat(val.lat);
-        val.lng = parseFloat(val.lng);
-      });
-      var coords = data;
-
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 18,
-        center: coords[0]
-      });
-      
-      var path = new google.maps.Polyline({
-        path: coords,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-      path.setMap(map);
-
-      /* add last know point */
-       var marker = new google.maps.Marker({
-        position: coords[0],
-        map: map,
-        title: "Last known position, " + coords[0].time
-    });
-
-    });
+		function initMap() {
+			var myLatLng = {
+				lat: -25.363,
+				lng: 131.044
+			};
 
 
-    /* change colors of polyline */
-//    var colorVariable = ["red", "green", "blue", "yellow", "black"];
-//    for (var a = 0; a <= 5; a++) {
-//      var polyOptions = {
-//        strokeColor: colorVariable[a],
-//        strokeOpacity: 1.0,
-//        strokeWeight: 2
-//      }
-//      poly = new google.maps.Polyline(polyOptions);
-//      poly.setMap(map);
-//    }
+			/* a path */
+			//    var coords = [
+			//      {lat: 37.772, lng: -122.214},
+			//      {lat: 21.291, lng: -157.821},
+			//      {lat: -18.142, lng: 178.431},
+			//      {lat: -27.467, lng: 153.027}
+			//    ];
+			$.getJSON("http://robbiescheidt.pythonanywhere.com/robgps", function(data) {
+				var items = [];
+				$.each(data, function(key, val) {
+					val.lat = parseFloat(val.lat);
+					val.lng = parseFloat(val.lng);
+				});
+				var coords = data;
+
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 18,
+					center: coords[0]
+				});
+
+				// var path = new google.maps.Polyline({
+				// 	path: coords,
+				// 	geodesic: true,
+				// 	strokeColor: '#FF0000',
+				// 	strokeOpacity: 1.0,
+				// 	strokeWeight: 2
+				// });
+				// path.setMap(map);
+
+				/* change colors of polyline */
+				var max = coords.length >= 72 ? 72-2 : coords.length-2
+			    for (var a = 0; a <= max; a++) {
+			      var polyOptions = {
+			        path: coords.slice(a, a+2),
+			        strokeColor: "red",
+			        strokeOpacity: 1.0-(a/max),
+			        strokeWeight: 2
+			      }
+			      poly = new google.maps.Polyline(polyOptions);
+			      poly.setMap(map);
+                 }
+
+				/* add last know point */
+				var marker = new google.maps.Marker({
+					position: coords[0],
+					map: map,
+					title: "Last known position, " + coords[0].time
+				});
+
+				var infowindow = new google.maps.InfoWindow({
+                    content: "<div>Last known location as of <b>"+coords[0].time+"</b></div>"
+                });
+                
+                 marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+
+			});
 
 
-  }
+
+
+		}
 
 
 </script>
@@ -87,4 +100,5 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwxY4cOMvFcRt2OHFq8ommeRsQltxWDOc&signed_in=true&callback=initMap"></script>
 
 </body>
+
 </html>
