@@ -22,9 +22,8 @@
 <script>
 
   function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4
-    });
+    var myLatLng = {lat: -25.363, lng: 131.044};
+    
 
     /* a single marker */
 //    var marker = new google.maps.Marker({
@@ -47,6 +46,12 @@
         val.lng = parseFloat(val.lng);
       });
       var coords = data;
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 18,
+        center: coords[0]
+      });
+      
       var path = new google.maps.Polyline({
         path: coords,
         geodesic: true,
