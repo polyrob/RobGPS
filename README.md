@@ -1,7 +1,7 @@
 # RobGPS
 ## Personal "find my phone" project
 
-##### This is a Android Service (App) that obtains the last known lat/lng coordinates of the device and posts them to a mysql DB.  From there they can be collected and graphed.
+##### This is a Android Service (App) that obtains the last known lat/lng coordinates of the device and posts them to a mysql DB.  From there they can be collected and mapped.
 
 
 Example REST POSTs.
@@ -22,6 +22,6 @@ mysql> select * from records;
 | 27 | 2015-12-06 01:20:56 | 37.84416502 | -122.29477850 |
 | 28 | 2015-12-06 01:23:10 | 37.84416502 | -122.29477850 |
 
-
+![alt text](http://i.imgur.com/4OiFMJ9.png "Lat/Lng to Google Maps")
 
 
