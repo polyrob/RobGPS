@@ -25,12 +25,7 @@
     var myLatLng = {lat: -25.363, lng: 131.044};
     
 
-    /* a single marker */
-//    var marker = new google.maps.Marker({
-//      position: myLatLng,
-//      map: map,
-//      title: 'Hello World!'
-//    });
+
 
     /* a path */
 //    var coords = [
@@ -61,6 +56,13 @@
       });
       path.setMap(map);
 
+      /* add last know point */
+       var marker = new google.maps.Marker({
+        position: coords[0],
+        map: map,
+        title: "Last known position, " + coords[0].time
+    });
+
     });
 
 
@@ -79,7 +81,8 @@
 
   }
 
-  </script>
+
+</script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwxY4cOMvFcRt2OHFq8ommeRsQltxWDOc&signed_in=true&callback=initMap"></script>
 
