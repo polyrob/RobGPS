@@ -30,7 +30,7 @@ def getCoords():
         tm = "%s" % row["time"]
         lat = "%s" % row["lat"]
         lng = "%s" % row["lng"]
-        t = {"time":tm, "lat":lat, "lng":lng}
+        t = {"lat":lat, "lng":lng}
         rowarray_list.append(t)
 
     json_results = json.dumps(rowarray_list)
@@ -64,3 +64,5 @@ def call_rest():
 
     db.close()
     return "success: "
+
+
