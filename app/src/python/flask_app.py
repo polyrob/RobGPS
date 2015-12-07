@@ -1,12 +1,10 @@
-
 # A very simple Flask Hello World app for you to get started with...
 from flask import Flask, request, render_template, Response
 import MySQLdb
 import json
 
+
 app = Flask(__name__)
-
-
 
 @app.route('/')
 def index():
@@ -20,7 +18,7 @@ def getCoords():
 
     db = MySQLdb.connect(host="robbiescheidt.mysql.pythonanywhere-services.com",    # your host, usually localhost
                      user="robbiescheidt",         # your username
-                     passwd="Qt3rytmysql",  # your password
+                     passwd=props["mysql_password"],  # your password
                      db="robbiescheidt$robgps")        # name of the data base
     cur = db.cursor(MySQLdb.cursors.DictCursor)
     # 72 should be 12 hours
@@ -53,7 +51,7 @@ def call_rest():
 
     db = MySQLdb.connect(host="robbiescheidt.mysql.pythonanywhere-services.com",    # your host, usually localhost
                      user="robbiescheidt",         # your username
-                     passwd="Qt3rytmysql",  # your password
+                     passwd=props["mysql_password"],  # your password
                      db="robbiescheidt$robgps")        # name of the data base
     x = db.cursor()
     try:
@@ -66,3 +64,18 @@ def call_rest():
     return "success: "
 
 
+def load_props(filename):
+    myprops = {}
+    f = open(filename, 'r')
+    for line in f:
+        line = line.rstrip() #removes trailing whitespace and '\n' chars
+
+        if "=" not in line: continue #skips blanks and comments w/o =
+        if line.startswith("#"): continue #skips comments which contain =
+
+        k, v = line.split("=", 1)
+        myprops[k] = v
+    return myprops
+
+
+props = load_props('config.properties')
